@@ -14,9 +14,15 @@ class MyASTVisitor : public RecursiveASTVisitor<MyASTVisitor> {
 			// Only function definitions (with bodies), not declarations.
 			if (f->hasBody()) {
 				Stmt *funcBody = f->getBody();
-				//CFG 
+				//CFG
 				std::unique_ptr<CFG> sourceCFG = CFG::buildCFG(f, funcBody, &TheContext, CFG::BuildOptions());
-				sourceCFG->print(llvm::errs(), LangOptions(), true);
+				// sourceCFG->viewCFG(LangOptions());
+				CFGBlock cfgblock = sourceCFG->front();
+				//cfgblock.printTerminator(llvm::errs(), LangOptions());
+				// CFGElement cfgelement = cfgblock.front();
+
+				// sourceCFG->print(llvm::errs(), LangOptions(), true);
+				sourceCFG->dump(LangOptions(), true);// 以stderr的方式输出
 
 			}
 
